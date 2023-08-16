@@ -7,27 +7,15 @@ import logging
 import asyncio
 import websockets
 
+from broker.gateway import handle_client
+
 logger = logging.getLogger('websockets')
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 logger.addHandler(logging.StreamHandler())
 
 app = Flask(__name__)
 cors = CORS(app)
 
-clients = []
-async def handle_client(websocket, path):
-    print("Neue Verbindung hergestellt")
-    clients.append(websocket)
-
-    try:
-        async for message in websocket:
-            print(f"Nachricht empfangen: {message}")
-            await websocket.send(f"Du hast gesagt: {message}")
-
-
-    finally:
-        clients.remove(websocket)
-        print("Verbindung geschlossen")
 
 
 def start_api():
