@@ -8,14 +8,15 @@ import asyncio
 import websockets
 
 from broker.gateway import handle_client
+from routes.management import management
 
 logger = logging.getLogger('websockets')
 logger.setLevel(logging.INFO)
 logger.addHandler(logging.StreamHandler())
 
 app = Flask(__name__)
+app.register_blueprint(management)
 cors = CORS(app)
-
 
 
 def start_api():
