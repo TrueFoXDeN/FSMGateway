@@ -3,6 +3,7 @@
   "args": [
     "str",
     "str",
+    "str",
     "any"
   ]
 }
