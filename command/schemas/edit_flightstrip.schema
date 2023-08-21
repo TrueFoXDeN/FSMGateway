@@ -4,6 +4,27 @@
     "str",
     "str",
     "str",
-    "any"
+    {
+      "callsign": "str",
+      "departureIcao": "str",
+      "arrivalIcao": "str",
+      "aircraft": "str",
+      "status": "str",
+      "wakeCategory": "str",
+      "flightrule": "str",
+      "altitude": "str",
+      "gate": "str",
+      "info": "str",
+      "airline": "str",
+      "squawk": "str",
+      "runway": "str",
+      "sidStar": "str",
+      "freeText": "str",
+      "route": "str",
+      "type": "str",
+      "triangleIconState": "str",
+      "communicationMethod": "str",
+      "position": "str"
+    }
   ]
 }

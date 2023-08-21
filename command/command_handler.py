@@ -28,7 +28,5 @@ async def handle_command(command, id):
             return await get_clients.execute(command, id)
         case 'get_data':
             return await get_data.execute(command, id)
-        case 'get_hash':
-            return await get_hash.execute(command, id)
         case 'move_flightstrip':
             return await move_flightstrip.execute(command, id)

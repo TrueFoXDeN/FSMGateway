@@ -14,5 +14,5 @@ async def execute(command, id):
         if id not in gateway.rooms[command['args'][1]]:
             gateway.rooms[command['args'][1]].append(id)
         print(gateway.rooms)
-        await message_handler.broadcast(f"User {gateway.clients[id]['name']} connected to room {command['args'][1]}.")
+        await message_handler.broadcast('', f"User {gateway.clients[id]['name']} connected to room {command['args'][1]}.")
         return True

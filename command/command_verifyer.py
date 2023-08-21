@@ -10,7 +10,6 @@ schemas = {"connect": open(os.path.join(os.path.dirname(__file__), "schemas/conn
            "edit_status": open(os.path.join(os.path.dirname(__file__), "schemas/edit_status.schema"), "r").read(),
            "get_clients": open(os.path.join(os.path.dirname(__file__), "schemas/get_clients.schema"), "r").read(),
            "get_data": open(os.path.join(os.path.dirname(__file__), "schemas/get_data.schema"), "r").read(),
-           "get_hash": open(os.path.join(os.path.dirname(__file__), "schemas/get_hash.schema"), "r").read(),
            "move_flightstrip": open(os.path.join(os.path.dirname(__file__), "schemas/move_flightstrip.schema"), "r").read(),
            }
 
