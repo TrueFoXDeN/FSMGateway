@@ -3,8 +3,9 @@ import json
 from broker import gateway, message_handler
 from command.command_verifyer import verify_command
 
-# args["roomid", "Name"]
+
 async def execute(command, id):
+    """args["roomid", "Name"]"""
     if not verify_command(json.dumps(command), "connect"):
         return False
     else:
