@@ -2,7 +2,7 @@ import json
 
 from broker import gateway, message_handler
 from broker.response_generator import respond
-from command.command_verifyer import verify_command
+from logic.command_verifyer import verify_command
 from logic.fsm_handler import rooms
 
 
@@ -17,4 +17,5 @@ async def execute(command, id):
         del rooms[room_id][column_id][flightstrip_id]
         await message_handler.broadcast_without_id(room_id, id,
                                                    respond("delete_flightstrip", [column_id, flightstrip_id]))
+        print(rooms)
         return True

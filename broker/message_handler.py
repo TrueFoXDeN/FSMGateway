@@ -1,7 +1,5 @@
-import json
-
 from broker.response_generator import respond
-from command.command_handler import handle_command
+from logic.command_handler import handle_command
 from broker import gateway
 
 

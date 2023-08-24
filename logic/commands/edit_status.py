@@ -2,9 +2,8 @@ import json
 
 from broker import gateway, message_handler
 from broker.response_generator import respond
-from command.command_verifyer import verify_command
+from logic.command_verifyer import verify_command
 from logic.fsm_handler import rooms
-
 
 
 async def execute(command, id):
@@ -19,4 +18,5 @@ async def execute(command, id):
         rooms[room_id][column_id][flightstrip_id]["status"] = status
         await message_handler.broadcast_without_id(room_id, id,
                                                    respond("edit_status", [column_id, flightstrip_id, status]))
+        print(rooms)
         return True

@@ -1,9 +1,8 @@
 import json
 
-from broker import gateway, message_handler
-from broker.message_handler import send
+from broker import message_handler
 from broker.response_generator import respond
-from command.command_verifyer import verify_command
+from logic.command_verifyer import verify_command
 from logic.fsm_handler import rooms
 
 
@@ -13,5 +12,5 @@ async def execute(command, id):
         return False
     else:
         room_id = command["args"][0]
-        await send(id, respond('get_data', [rooms[room_id]]))
+        await message_handler.send(id, respond('get_data', [rooms[room_id]]))
         return True

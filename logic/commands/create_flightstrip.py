@@ -2,12 +2,12 @@ import json
 
 from broker import gateway, message_handler
 from broker.response_generator import respond
-from command.command_verifyer import verify_command
+from logic.command_verifyer import verify_command
 from logic.fsm_handler import rooms
 
 
-# args["room_id", "column_id", "flightstrip_id", "type", "position"]
 async def execute(command, id):
+    """args["room_id", "column_id", "flightstrip_id", "type", "position"]"""
     if not verify_command(json.dumps(command), "create_flightstrip"):
         return False
     else:

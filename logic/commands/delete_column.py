@@ -2,7 +2,7 @@ import json
 
 from broker import gateway, message_handler
 from broker.response_generator import respond
-from command.command_verifyer import verify_command
+from logic.command_verifyer import verify_command
 from logic.fsm_handler import rooms
 
 
