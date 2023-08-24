@@ -11,5 +11,7 @@ async def execute(command, id):
         return False
     else:
         rooms[command["args"][0]][command["args"][1]] = {"name": command["args"][2], "position": command["args"][3]}
+        await message_handler.broadcast_without_id(command['args'][0], id, "{}")
+
         print(rooms)
         return True

@@ -1,7 +1,7 @@
 import json
 
 from command.commands import connect, create_column, create_flightstrip, delete_column, delete_flightstrip, \
-    edit_flightstrip, edit_status, get_clients, get_data, get_hash, move_flightstrip
+    edit_flightstrip, edit_status, get_clients, get_data, move_flightstrip
 
 
 async def handle_command(command, id):
