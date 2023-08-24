@@ -6,7 +6,11 @@ from broker import gateway
 
 
 async def handle(command, id):
-    res = await handle_command(command, id)
+    res = False
+    try:
+        res = await handle_command(command, id)
+    except:
+        await gateway.clients[id]["websocket"].send(respond('error', ['Command caused an exception']))
     if not res:
         await gateway.clients[id]["websocket"].send(respond('error', ['Command has wrong format']))
 
