@@ -14,3 +14,10 @@ def create_room():
     fsm_handler.rooms[room_id] = {}
     return r.respond({"id": room_id})
 
+
+@management.route('/room/<room_id>', methods=["POST"])
+def create_room_id(room_id):
+    room_id = room_id
+    gateway.rooms[room_id] = []
+    fsm_handler.rooms[room_id] = {}
+    return r.respond({"id": room_id})

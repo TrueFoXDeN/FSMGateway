@@ -13,5 +13,7 @@ async def execute(command, id):
     else:
         room_id = command["args"][0]
         print(gateway.rooms[room_id])
-        await message_handler.send(id, respond('get_clients', [gateway.rooms[room_id]]))
+        client_ids = gateway.rooms[room_id]
+        client_names = [gateway.clients[i]["name"] for i in client_ids]
+        await message_handler.send(id, respond('get_clients', [client_names]))
         return True

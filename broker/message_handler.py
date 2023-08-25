@@ -7,8 +7,8 @@ async def handle(command, id):
     res = False
     try:
         res = await handle_command(command, id)
-    except:
-        await gateway.clients[id]["websocket"].send(respond('error', ['Command caused an exception']))
+    except Exception as e:
+        await gateway.clients[id]["websocket"].send(respond('error', ['Command caused an exception', str(e)]))
     if not res:
         await gateway.clients[id]["websocket"].send(respond('error', ['Command has wrong format']))
 
@@ -25,4 +25,4 @@ async def broadcast_without_id(room_id, id, msg):
 
 
 async def send(id, msg):
-    await gateway.clients[id].send(msg)
+    await gateway.clients[id]["websocket"].send(msg)

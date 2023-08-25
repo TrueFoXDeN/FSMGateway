@@ -4,7 +4,7 @@ import string
 
 
 def uuid_gen():
-    return uuid.uuid4()
+    return str(uuid.uuid4())
 
 
 def room_id():
