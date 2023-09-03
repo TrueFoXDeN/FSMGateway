@@ -3,7 +3,7 @@ import json
 from broker import message_handler
 from broker.response_generator import respond
 from logic.command_verifyer import verify_command
-from logic.fsm_handler import rooms
+from logic.fsm_handler import rooms, order_flightstrips
 
 
 async def execute(command, id):
@@ -12,5 +12,6 @@ async def execute(command, id):
         return False
     else:
         room_id = command["args"][0]
-        await message_handler.send(id, respond('get_data', [rooms[room_id]]))
+        data = {'order': order_flightstrips[room_id], 'data': rooms[room_id]}
+        await message_handler.send(id, respond('get_data', [data]))
         return True

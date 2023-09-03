@@ -23,8 +23,7 @@
       "route": "str",
       "type": "str",
       "triangleIconState": "str",
-      "communicationMethod": "str",
-      "position": "str"
+      "communicationMethod": "str"
     }
   ]
 }

@@ -3,7 +3,7 @@ import json
 from broker import gateway, message_handler
 from broker.response_generator import respond
 from logic.command_verifyer import verify_command
-from logic.fsm_handler import rooms
+from logic.fsm_handler import rooms, order_flightstrips
 
 
 async def execute(command, id):
@@ -15,24 +15,15 @@ async def execute(command, id):
         column_id = command["args"][1]
         flightstrip_id = command["args"][2]
         new_column_id = command["args"][3]
-        position = command["args"][4]
+        position = int(command["args"][4])
 
-        flightstrip = rooms[room_id][column_id][flightstrip_id]
+        order_flightstrips[room_id][column_id].remove(flightstrip_id)
+        order_flightstrips[room_id][new_column_id].insert(position, flightstrip_id)
 
-        # if column_id == new_column_id:
-        #     current_pos = int(flightstrip["position"])
-        #     for fs in rooms[room_id][column_id].values():
-        #         if isinstance(flightstrip, dict) and "position" in fs:
-        #             if position < fs["position"] < current_pos:
-        #                 fs["position"] = str(int(fs["position"]) + 1)
-
-        # else:
-        #     del rooms[room_id][column_id][flightstrip_id]
-        #     rooms[room_id][new_column_id] = flightstrip
-        #     rooms[room_id][new_column_id][flightstrip_id]["position"] = position
-        #     await message_handler.broadcast_without_id(room_id, id, respond("move_flightstrip",
-        #                                                                     [column_id, flightstrip_id, new_column_id,
-        #                                                                      position]))
+        await message_handler.broadcast_without_id(room_id, id,
+                                                   respond("move_flightstrip",
+                                                           [column_id, flightstrip_id, new_column_id, position]))
 
         print(rooms)
+        print(order_flightstrips)
         return True
