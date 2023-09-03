@@ -1,2 +1,4 @@
 json-schema-matcher==0.1.7.1
 six==1.16.0
+bcrypt==4.0.1
+pyjwt==2.8.0

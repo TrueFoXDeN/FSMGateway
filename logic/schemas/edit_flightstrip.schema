@@ -4,6 +4,7 @@
     "str",
     "str",
     "str",
+    "str",
     {
       "callsign": "str",
       "departureIcao": "str",
