@@ -12,6 +12,8 @@ def create_room():
     room_id = uid.room_id()
     gateway.rooms[room_id] = []
     fsm_handler.rooms[room_id] = {}
+    fsm_handler.order_columns[room_id] = []
+    fsm_handler.order_flightstrips[room_id] = {}
     return r.respond({"id": room_id})
 
 
@@ -20,4 +22,6 @@ def create_room_id(room_id):
     room_id = room_id
     gateway.rooms[room_id] = []
     fsm_handler.rooms[room_id] = {}
+    fsm_handler.order_columns[room_id] = []
+    fsm_handler.order_flightstrips[room_id] = {}
     return r.respond({"id": room_id})

@@ -18,12 +18,21 @@ async def execute(command, id):
         position = command["args"][4]
 
         flightstrip = rooms[room_id][column_id][flightstrip_id]
-        del rooms[room_id][column_id]
-        rooms[room_id][new_column_id] = flightstrip
-        rooms[room_id][new_column_id][flightstrip_id]["position"] = position
-        await message_handler.broadcast_without_id(room_id, id, respond("move_flightstrip",
-                                                                        [column_id, flightstrip_id, new_column_id,
-                                                                         position]))
+
+        # if column_id == new_column_id:
+        #     current_pos = int(flightstrip["position"])
+        #     for fs in rooms[room_id][column_id].values():
+        #         if isinstance(flightstrip, dict) and "position" in fs:
+        #             if position < fs["position"] < current_pos:
+        #                 fs["position"] = str(int(fs["position"]) + 1)
+
+        # else:
+        #     del rooms[room_id][column_id][flightstrip_id]
+        #     rooms[room_id][new_column_id] = flightstrip
+        #     rooms[room_id][new_column_id][flightstrip_id]["position"] = position
+        #     await message_handler.broadcast_without_id(room_id, id, respond("move_flightstrip",
+        #                                                                     [column_id, flightstrip_id, new_column_id,
+        #                                                                      position]))
 
         print(rooms)
         return True

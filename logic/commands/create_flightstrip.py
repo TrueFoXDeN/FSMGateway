@@ -18,14 +18,14 @@ async def execute(command, id):
         type = command["args"][3]
         position = command["args"][4]
 
-        positions = [int(flightstrip["position"]) for flightstrip in rooms[room_id][column_id].values() if
-                     isinstance(flightstrip, dict) and "position" in flightstrip]
+        # positions = [int(flightstrip["position"]) for flightstrip in rooms[room_id][column_id].values() if
+        #              isinstance(flightstrip, dict) and "position" in flightstrip]
 
-        if len(positions) > 0:
-            max_position = max(positions) + 1
-            if position != max_position:
-                position = max_position
-                await message_handler.send(id, respond('edit_position', [flightstrip_id, max_position]))
+        # if len(positions) > 0:
+        #     max_position = max(positions) + 1
+        #     if position != max_position:
+        #         position = max_position
+        #         await message_handler.send(id, respond('edit_position', [flightstrip_id, max_position]))
 
         rooms[room_id][column_id][flightstrip_id] = {"type": type, "position": position}
 
