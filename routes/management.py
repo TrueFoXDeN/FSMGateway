@@ -25,3 +25,8 @@ def create_room_id(room_id):
     fsm_handler.rooms[room_id] = {"password": auth.encrypt(password)}
     fsm_handler.order_flightstrips[room_id] = {}
     return r.respond({"id": room_id})
+
+
+@management.route('/room/<room_id>', methods=["GET"])
+def get_room_id(room_id):
+    return r.respond({"exists": True})
