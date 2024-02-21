@@ -4,7 +4,7 @@ from broker import gateway
 from logic import fsm_handler
 from util import uid
 
-management = Blueprint('management', __name__)
+management = Blueprint('management', __name__, url_prefix='/api/v1')
 
 
 @management.route('/room', methods=["POST"])
