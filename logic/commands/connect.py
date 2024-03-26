@@ -5,6 +5,7 @@ from broker import gateway, message_handler
 from broker.response_generator import respond
 from logic import fsm_handler
 from logic.command_verifyer import verify_command
+from logic.fsm_handler import order_flightstrips, rooms
 
 
 async def execute(command, id):
@@ -27,6 +28,9 @@ async def execute(command, id):
         if id not in gateway.rooms[room_id]:
             gateway.rooms[room_id].append(id)
         print(gateway.rooms)
-        await message_handler.send(id, respond('token', [token]))
+        data = {'order': order_flightstrips[room_id], 'data': dict(rooms[room_id])}
+        del data['data']['password']
+
+        await message_handler.send(id, respond('token', [token, data]))
         await message_handler.broadcast_without_id(room_id, id, respond('connect', [name]))
         return True
