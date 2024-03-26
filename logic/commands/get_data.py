@@ -17,6 +17,9 @@ async def execute(command, id):
         if not auth.verify_token(token, room_id):
             return False
 
-        data = {'order': order_flightstrips[room_id], 'data': rooms[room_id]}
+
+        data = {'order': order_flightstrips[room_id], 'data': dict(rooms[room_id])}
+        del data['data']['password']
+        print(data)
         await message_handler.send(id, respond('get_data', [data]))
         return True

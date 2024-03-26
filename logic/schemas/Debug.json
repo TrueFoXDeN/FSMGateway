@@ -1,0 +1,94 @@
+[
+    {
+        "cmd": "connect",
+        "args": [
+            "abcde",
+            "test",
+            "Laurenz"
+        ]
+    },
+    {
+        "cmd": "get_data",
+        "args": [
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb29tIjoiYWJjZGUifQ.cGtegUyIC5bJtK4CrcIzQbNTEncwuDEuFhG66u7CqU0",
+            "abcde"
+        ]
+    },
+    {
+        "cmd": "create_column",
+        "args": [
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb29tIjoiYWJjZGUifQ.cGtegUyIC5bJtK4CrcIzQbNTEncwuDEuFhG66u7CqU0",
+            "abcde",
+            "1fdff9ac-1d02-44ca-8466-69ea309f0031",
+            "TWR"
+        ]
+    },
+    {
+        "cmd": "create_flightstrip",
+        "args": [
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb29tIjoiYWJjZGUifQ.cGtegUyIC5bJtK4CrcIzQbNTEncwuDEuFhG66u7CqU0",
+            "abcde",
+            "1fdff9ac-1d02-44ca-8466-69ea309f0031",
+            "2abe37b4-1d02-44ca-8466-69ea309f0031",
+            "I"
+        ]
+    },
+    {
+        "cmd": "delete_column",
+        "args": [
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb29tIjoiYWJjZGUifQ.cGtegUyIC5bJtK4CrcIzQbNTEncwuDEuFhG66u7CqU0",
+            "abcde",
+            "1fdff9ac-1d02-44ca-8466-69ea309f0031"
+        ]
+    },
+    {
+        "cmd": "delete_flightstrip",
+        "args": [
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb29tIjoiYWJjZGUifQ.cGtegUyIC5bJtK4CrcIzQbNTEncwuDEuFhG66u7CqU0",
+            "abcde",
+            "1fdff9ac-1d02-44ca-8466-69ea309f0031",
+            "2abe37b4-1d02-44ca-8466-69ea309f0031"
+        ]
+    },
+    {
+        "cmd": "edit_flightstrip",
+        "args": [
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb29tIjoiYWJjZGUifQ.cGtegUyIC5bJtK4CrcIzQbNTEncwuDEuFhG66u7CqU0",
+            "abcde",
+            "1fdff9ac-1d02-44ca-8466-69ea309f0031",
+            "2abe37b4-1d02-44ca-8466-69ea309f0031",
+            {
+                "callsign": "DLH26F",
+                "departureIcao": "EDDF",
+                "arrivalIcao": "EDDK",
+                "aircraft": "A321",
+                "status": "TAXI",
+                "wakeCategory": "M",
+                "flightrule": "I",
+                "altitude": "0",
+                "gate": "12",
+                "info": "",
+                "airline": "LUFTHANSA",
+                "squawk": "1000",
+                "runway": "26R",
+                "sidStar": "ANEK2R",
+                "freeText": "Toller Pilot",
+                "route": "",
+                "type": "I",
+                "triangleIconState": "0",
+                "communicationMethod": "0"
+            }
+        ]
+    },
+    {
+        "cmd": "move_flightstrip",
+        "args": [
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb29tIjoiYWJjZGUifQ.cGtegUyIC5bJtK4CrcIzQbNTEncwuDEuFhG66u7CqU0",
+            "abcde",
+            "1fdff9ac-1d02-44ca-8466-69ea309f0031",
+            "2abe37b4-1d02-44ca-8466-69ea309f0031",
+            "1fdff9ac-1d02-44ca-8466-69ea309f0031",
+            "2"
+        ]
+    }
+]

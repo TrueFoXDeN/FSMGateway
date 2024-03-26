@@ -20,11 +20,11 @@ cors = CORS(app)
 
 
 def start_api():
-    app.run(port=5000)
+    app.run(host='0.0.0.0', port=5000)
 
 
 def start_websocket():
-    start_server = websockets.serve(handle_client, "localhost", 4000)
+    start_server = websockets.serve(handle_client, "", 4000)
 
     asyncio.get_event_loop().run_until_complete(start_server)
     asyncio.get_event_loop().run_forever()
