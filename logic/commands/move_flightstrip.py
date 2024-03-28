@@ -24,6 +24,10 @@ async def execute(command, id):
         order_flightstrips[room_id][column_id].remove(flightstrip_id)
         order_flightstrips[room_id][new_column_id].insert(position, flightstrip_id)
 
+        fl = rooms[room_id][column_id][flightstrip_id]
+        del rooms[room_id][column_id][flightstrip_id]
+        rooms[room_id][new_column_id][flightstrip_id] = fl
+
         await message_handler.broadcast_without_id(room_id, id,
                                                    respond("move_flightstrip",
                                                            [column_id, flightstrip_id, new_column_id, position]))
