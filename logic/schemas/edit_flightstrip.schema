@@ -10,7 +10,8 @@
       "departureIcao": "str",
       "arrivalIcao": "str",
       "aircraft": "str",
-      "status": "str",
+      "status": "int",
+      "statusText": "str",
       "wakeCategory": "str",
       "flightrule": "str",
       "altitude": "str",
@@ -22,9 +23,9 @@
       "sidStar": "str",
       "freeText": "str",
       "route": "str",
-      "type": "str",
-      "triangleIconState": "str",
-      "communicationMethod": "str"
+      "type": "int",
+      "triangleIconState": "int",
+      "communicationIconState": "int"
     }
   ]
 }

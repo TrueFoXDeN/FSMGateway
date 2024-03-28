@@ -62,7 +62,8 @@
                 "departureIcao": "EDDF",
                 "arrivalIcao": "EDDK",
                 "aircraft": "A321",
-                "status": "TAXI",
+                "status": 2,
+                "statusText": "TAXI",
                 "wakeCategory": "M",
                 "flightrule": "I",
                 "altitude": "0",
@@ -74,9 +75,9 @@
                 "sidStar": "ANEK2R",
                 "freeText": "Toller Pilot",
                 "route": "",
-                "type": "I",
-                "triangleIconState": "0",
-                "communicationMethod": "0"
+                "type": 0,
+                "triangleIconState": 0,
+                "communicationIconState": 0
             }
         ]
     },
