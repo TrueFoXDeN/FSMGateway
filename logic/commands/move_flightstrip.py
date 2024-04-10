@@ -17,7 +17,7 @@ async def execute(command, id):
         column_id = command["args"][2]
         flightstrip_id = command["args"][3]
         new_column_id = command["args"][4]
-        position = int(command["args"][5])
+        position = command["args"][5]
         if not auth.verify_token(token, room_id):
             return False
 
