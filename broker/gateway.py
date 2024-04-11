@@ -38,6 +38,4 @@ async def handle_client(websocket, path):
     finally:
         clients.pop(id)
         remove_id(rooms, id)
-        print(clients)
-        print(rooms)
         print(f"Verbindung geschlossen: {id}")

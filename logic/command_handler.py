@@ -5,11 +5,6 @@ from logic.commands import connect, create_column, create_flightstrip, delete_co
 
 
 async def handle_command(command, id):
-    try:
-        print(command)
-        command = json.loads(command)
-    except:
-        return False
     match command['cmd']:
         case 'connect':
             return await connect.execute(command, id)

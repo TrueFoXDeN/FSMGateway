@@ -16,18 +16,19 @@ async def execute(command, id):
         room_id = command["args"][0]
         password = command["args"][1]
         name = command["args"][2]
-        print(password, fsm_handler.rooms[room_id]["password"])
-        if auth.check_password(password, fsm_handler.rooms[room_id]["password"]):
-            token = auth.encode_token({'room': room_id})
-            print(token)
-        else:
-            return False
-        gateway.clients[id]['name'] = name
+
         if room_id not in gateway.rooms:
             return False
+
+        if auth.check_password(password, fsm_handler.rooms[room_id]["password"]):
+            token = auth.encode_token({'room': room_id})
+        else:
+            return False
+
         if id not in gateway.rooms[room_id]:
             gateway.rooms[room_id].append(id)
-        print(gateway.rooms)
+
+        gateway.clients[id]['name'] = name
         data = {'order': order_flightstrips[room_id], 'data': dict(rooms[room_id])}
         del data['data']['password']
 
