@@ -19,9 +19,11 @@ async def handle(command, id):
             else:
                 res = await handle_command(command, id)
                 if not res:
-                    await gateway.clients[id]["websocket"].send(respond('error', ['Command has wrong format']))
+                    await gateway.clients[id]["websocket"].send(respond('error',
+                                                                        ['Command has wrong format', gateway.rooms[command[1]]]))
         except Exception as e:
-            await gateway.clients[id]["websocket"].send(respond('error', ['Command caused an exception', str(e)]))
+            await gateway.clients[id]["websocket"].send(respond('error', ['Command caused an exception',
+                                                                          gateway.rooms[command[1]]]))
     except Exception as e:
         await gateway.clients[id]["websocket"].send(respond('error', ['Command has wrong format']))
 
