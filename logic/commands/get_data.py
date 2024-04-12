@@ -21,5 +21,5 @@ async def execute(command, id):
         data = {'order': order_flightstrips[room_id], 'data': dict(rooms[room_id])}
         del data['data']['password']
         print(data)
-        await message_handler.send(id, respond('get_data', [data]))
+        await message_handler.send(id, respond('get_data', ['', data]))
         return True
