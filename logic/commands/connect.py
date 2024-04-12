@@ -32,6 +32,10 @@ async def execute(command, id):
         data = {'order': order_flightstrips[room_id], 'data': dict(rooms[room_id])}
         del data['data']['password']
 
+        client_ids = gateway.rooms[room_id]
+        client_names = [gateway.clients[i]["name"] for i in client_ids]
+
         await message_handler.send(id, respond('token', [token, data]))
+        await message_handler.send(id, respond('get_clients', client_names))
         await message_handler.broadcast_without_id(room_id, id, respond('connect', [name]))
         return True
