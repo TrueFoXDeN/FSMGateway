@@ -33,7 +33,8 @@
       "route": "str",
       "type": "int",
       "triangleIconState": "int",
-      "communicationIconState": "int"
+      "communicationIconState": "int",
+      "isMouseOver": "bool"
     }
   ]
 }
