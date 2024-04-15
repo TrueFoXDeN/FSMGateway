@@ -41,18 +41,19 @@ async def start_pruning():
         rooms_to_delete = []
 
         for room in fsm_handler.rooms:
-            activity = datetime.fromisoformat(fsm_handler.rooms[room]['activity'])
-            if datetime.now() > activity + timedelta(hours=1):
-                rooms_to_delete.append(room)
+            if 'activity' in fsm_handler.rooms[room]:
+                activity = datetime.fromisoformat(fsm_handler.rooms[room]['activity'])
+                if datetime.now() > activity + timedelta(hours=1):
+                    rooms_to_delete.append(room)
 
-                ids = gateway.rooms[room]
+                    ids = gateway.rooms[room]
 
-                for id in ids:
-                    await gateway.clients[id]["websocket"].send(
-                        respond('room_closed', ['Room closed due to inactivity']))
-                    await gateway.clients[id]['websocket'].close()
-                del gateway.rooms[room]
-                print(f'room {room} pruned')
+                    for id in ids:
+                        await gateway.clients[id]["websocket"].send(
+                            respond('room_closed', ['Room closed due to inactivity']))
+                        await gateway.clients[id]['websocket'].close()
+                    del gateway.rooms[room]
+                    print(f'room {room} pruned')
         for room in rooms_to_delete:
             del fsm_handler.rooms[room]
             del fsm_handler.order_flightstrips[room]
