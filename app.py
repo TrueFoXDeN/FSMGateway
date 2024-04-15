@@ -26,7 +26,7 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 async def start_api():
     config = Config()
-    config.bind = ["0.0.0.0:5000"]
+    config.bind = ["0.0.0.0:5002"]
     await serve(app, config)
 
 
