@@ -30,7 +30,6 @@ def decode_token(token):
 def verify_token(token, room_id):
     try:
         room = decode_token(token)['room']
-        print(room)
         if room == room_id:
             return True
     except Exception as e:

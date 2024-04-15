@@ -1,10 +1,12 @@
 import json
+from datetime import datetime
 
 from api import auth
 from broker import message_handler
 from broker.response_generator import respond
+from logic import fsm_handler
 from logic.command_verifyer import verify_command
-from logic.fsm_handler import rooms, order_flightstrips
+
 
 
 async def execute(command, id):
@@ -18,8 +20,9 @@ async def execute(command, id):
             return False
 
 
-        data = {'order': order_flightstrips[room_id], 'data': dict(rooms[room_id])}
+        data = {'order': fsm_handler.order_flightstrips[room_id], 'data': dict(fsm_handler.rooms[room_id])}
+        fsm_handler.rooms[room_id]['activity'] = datetime.now().isoformat()
         del data['data']['password']
-        print(data)
+        del data['data']['activity']
         await message_handler.send(id, respond('get_data', ['', data]))
         return True

@@ -1,10 +1,11 @@
 import json
+from datetime import datetime
 
 from api import auth
 from broker import message_handler
 from broker.response_generator import respond
+from logic import fsm_handler
 from logic.command_verifyer import verify_command
-from logic.fsm_handler import rooms, order_flightstrips
 
 
 async def execute(command, id):
@@ -21,17 +22,17 @@ async def execute(command, id):
         if not auth.verify_token(token, room_id):
             return False
 
-        order_flightstrips[room_id][column_id].remove(flightstrip_id)
-        order_flightstrips[room_id][new_column_id].insert(position, flightstrip_id)
+        fsm_handler.order_flightstrips[room_id][column_id].remove(flightstrip_id)
+        fsm_handler.order_flightstrips[room_id][new_column_id].insert(position, flightstrip_id)
 
-        fl = rooms[room_id][column_id][flightstrip_id]
-        del rooms[room_id][column_id][flightstrip_id]
-        rooms[room_id][new_column_id][flightstrip_id] = fl
+        fl = fsm_handler.rooms[room_id][column_id][flightstrip_id]
+        del fsm_handler.rooms[room_id][column_id][flightstrip_id]
+        fsm_handler.rooms[room_id][new_column_id][flightstrip_id] = fl
+
+        fsm_handler.rooms[room_id]['activity'] = datetime.now().isoformat()
 
         await message_handler.broadcast_without_id(room_id, id,
                                                    respond("move_flightstrip",
                                                            [column_id, flightstrip_id, new_column_id, position]))
 
-        print(rooms)
-        print(order_flightstrips)
         return True

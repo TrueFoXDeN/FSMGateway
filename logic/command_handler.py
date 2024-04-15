@@ -1,7 +1,7 @@
 import json
 
 from logic.commands import connect, create_column, create_flightstrip, delete_column, delete_flightstrip, \
-    edit_flightstrip, edit_status, get_clients, get_data, move_flightstrip
+    edit_flightstrip, get_clients, get_data, move_flightstrip
 
 
 async def handle_command(command, id):
@@ -18,8 +18,6 @@ async def handle_command(command, id):
             return await delete_flightstrip.execute(command, id)
         case 'edit_flightstrip':
             return await edit_flightstrip.execute(command, id)
-        case 'edit_status':
-            return await edit_status.execute(command, id)
         case 'get_clients':
             return await get_clients.execute(command, id)
         case 'get_data':

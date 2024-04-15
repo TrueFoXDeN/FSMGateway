@@ -1,10 +1,12 @@
 import json
+from datetime import datetime
 
 from api import auth
 from broker import gateway, message_handler
 from broker.response_generator import respond
+from logic import fsm_handler
 from logic.command_verifyer import verify_command
-from logic.fsm_handler import rooms, order_flightstrips
+
 
 
 async def execute(command, id):
@@ -18,9 +20,10 @@ async def execute(command, id):
         if not auth.verify_token(token, room_id):
             return False
 
-        del rooms[room_id][column_id]
-        del order_flightstrips[room_id][column_id]
+        fsm_handler.rooms[room_id]['activity'] = datetime.now().isoformat()
+        del fsm_handler.rooms[room_id][column_id]
+        del fsm_handler.order_flightstrips[room_id][column_id]
         await message_handler.broadcast_without_id(room_id, id, respond("delete_column", [column_id]))
-        print(rooms)
+
 
         return True

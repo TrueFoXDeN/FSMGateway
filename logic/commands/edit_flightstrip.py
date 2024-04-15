@@ -1,10 +1,11 @@
 import json
+from datetime import datetime
 
 from api import auth
 from broker import gateway, message_handler
 from broker.response_generator import respond
+from logic import fsm_handler
 from logic.command_verifyer import verify_command
-from logic.fsm_handler import rooms
 
 
 async def execute(command, id):
@@ -20,8 +21,8 @@ async def execute(command, id):
         if not auth.verify_token(token, room_id):
             return False
 
-        rooms[room_id][column_id][flightstrip_id] = data
+        fsm_handler.rooms[room_id]['activity'] = datetime.now().isoformat()
+        fsm_handler.rooms[room_id][column_id][flightstrip_id] = data
         await message_handler.broadcast_without_id(room_id, id,
                                                    respond("edit_flightstrip", [column_id, flightstrip_id, data]))
-        print(rooms)
         return True
