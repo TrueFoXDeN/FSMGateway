@@ -1,3 +1,4 @@
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta
 
 from flask import Flask
@@ -6,8 +7,7 @@ import logging
 import asyncio
 import websockets
 
-from hypercorn.config import Config
-from hypercorn.asyncio import serve
+from waitress import serve
 
 from broker import gateway
 from broker.gateway import handle_client
@@ -16,6 +16,7 @@ from logic import fsm_handler
 from routes.management import management
 
 logger = logging.getLogger('websockets')
+logger.propagate = False
 logger.setLevel(logging.INFO)
 logger.addHandler(logging.StreamHandler())
 
@@ -25,9 +26,9 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 async def start_api():
-    config = Config()
-    config.bind = ["0.0.0.0:5002"]
-    await serve(app, config)
+    serve(app, port=5002, host='0.0.0.0', url_scheme='https')
+    while True:
+        await asyncio.sleep(10)
 
 
 async def start_websocket():
@@ -60,13 +61,16 @@ async def start_pruning():
         await asyncio.sleep(60 * 10)
 
 
-async def main():
-    await asyncio.gather(
-        start_api(),
-        start_websocket(),
-        start_pruning()
-    )
+def run_async_function(coroutine):
+    asyncio.run(coroutine)
+
+
+def main():
+    with ThreadPoolExecutor() as executor:
+        executor.submit(run_async_function, start_api())
+        executor.submit(run_async_function, start_websocket())
+        executor.submit(run_async_function, start_pruning())
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    main()
