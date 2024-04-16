@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+    multiplayer:
+      build: .
+      ports:
+        - '5002:5002'
+      image: multiplayer
+      container_name: multiplayer
+      networks:
+        - hs-services
+
+networks:
+    hs-services:
+        driver: bridge
+        name: hs-services
