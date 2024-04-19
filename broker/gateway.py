@@ -38,7 +38,7 @@ async def handle_client(websocket, path):
             await handle(message, id)
 
     finally:
-        if [clients[id]['name']] is not None:
+        if [clients[id]] is not None:
             await message_handler.broadcast_without_id(get_room_from_id(id, rooms), id,
                                                        respond('user_disconnect', [clients[id]['name']]))
         clients.pop(id)
