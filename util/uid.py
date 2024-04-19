@@ -8,6 +8,6 @@ def uuid_gen():
 
 
 def room_id():
-    characters = string.ascii_letters + string.digits
+    characters = string.ascii_uppercase + string.digits
     random_string = ''.join(random.choice(characters) for _ in range(5))
     return random_string

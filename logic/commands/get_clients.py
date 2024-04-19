@@ -21,5 +21,5 @@ async def execute(command, id):
         fsm_handler.rooms[room_id]['activity'] = datetime.now().isoformat()
         client_ids = gateway.rooms[room_id]
         client_names = [gateway.clients[i]["name"] for i in client_ids]
-        await message_handler.send(id, respond('get_clients', [client_names]))
+        await message_handler.send(id, respond('get_clients', client_names))
         return True

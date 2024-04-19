@@ -1,4 +1,6 @@
+from broker import message_handler
 from broker.message_handler import handle
+from broker.response_generator import respond
 from util.uid import uuid_gen
 
 clients = {}
@@ -20,11 +22,15 @@ def remove_id(dictionary, target_id):
     return False
 
 
-async def handle_client(websocket, path):
+def get_room_from_id(id, rooms):
+    for key, val in rooms.items():
+        if id in val:
+            return key
 
+
+async def handle_client(websocket, path):
     id = str(uuid_gen())
     print(f"Neue Verbindung hergestellt")
-
 
     clients[id] = {"websocket": websocket}
     try:
@@ -32,6 +38,8 @@ async def handle_client(websocket, path):
             await handle(message, id)
 
     finally:
+        await message_handler.broadcast_without_id(get_room_from_id(id, rooms), id,
+                                                   respond('user_disconnect', [clients[id]['name']]))
         clients.pop(id)
         remove_id(rooms, id)
         print(f"Verbindung geschlossen: {id}")
