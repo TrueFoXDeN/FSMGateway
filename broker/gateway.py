@@ -5,9 +5,9 @@ clients = {}
 rooms = {}
 
 
-def client_exists(ip, dict):
+def client_exists(name, dict):
     for item in dict.values():
-        if item.get('ip') == ip:
+        if item.get('name') == name:
             return True
     return False
 
@@ -21,16 +21,12 @@ def remove_id(dictionary, target_id):
 
 
 async def handle_client(websocket, path):
-    ip = websocket.remote_address[0]
+
     id = str(uuid_gen())
-    print(f"Neue Verbindung hergestellt: {ip}")
+    print(f"Neue Verbindung hergestellt")
 
-    if client_exists(ip, clients):
-        print(f"Client {ip} already connected.")
-        await websocket.send(f"Client already Connected")
-        await websocket.close()
 
-    clients[id] = {"websocket": websocket, "ip": ip}
+    clients[id] = {"websocket": websocket}
     try:
         async for message in websocket:
             await handle(message, id)
