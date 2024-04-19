@@ -38,8 +38,9 @@ async def handle_client(websocket, path):
             await handle(message, id)
 
     finally:
-        await message_handler.broadcast_without_id(get_room_from_id(id, rooms), id,
-                                                   respond('user_disconnect', [clients[id]['name']]))
+        if [clients[id]['name']] is not None:
+            await message_handler.broadcast_without_id(get_room_from_id(id, rooms), id,
+                                                       respond('user_disconnect', [clients[id]['name']]))
         clients.pop(id)
         remove_id(rooms, id)
         print(f"Verbindung geschlossen: {id}")
