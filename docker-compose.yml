@@ -9,6 +9,8 @@ services:
       container_name: multiplayer
       networks:
         - hs-services
+      environment:
+        - JWT_PASSWORD=Z6LXQoOMSVkAyf0TLkOMSn9jigB8VD7m
 
 networks:
     hs-services:
