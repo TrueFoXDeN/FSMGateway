@@ -10,6 +10,7 @@ async def handle(command, id):
     res = False
     try:
         command = json.loads(command)
+        print(command)
         try:
             if command['cmd'] == 'connect':
                 res = await handle_command(command, id)
