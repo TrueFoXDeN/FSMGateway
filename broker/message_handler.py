@@ -6,11 +6,13 @@ from broker import gateway
 from broker.response_generator import respond
 from logic import fsm_handler
 from logic.command_handler import handle_command
+from logs import logger
 
 
 async def handle(command, id):
     res = False
     try:
+        logger.trace("Handling command", command)
         command = json.loads(command)
         try:
             if command['cmd'] == 'connect':
@@ -25,19 +27,18 @@ async def handle(command, id):
                     data = {'order': fsm_handler.order_flightstrips[command['args'][1]],
                             'data': dict(fsm_handler.rooms[command['args'][1]])}
                     del data['data']['password']
+                    logger.trace('Command not accepted', {'command': command, 'data': data})
                     await gateway.clients[id]["websocket"].send(respond('error',
                                                                         ['Command not accepted', data]))
         except Exception as e:
+            logger.error('Command caused an exception', {'command': command, 'exception': traceback.format_exc()})
             data = {'order': fsm_handler.order_flightstrips[command['args'][1]],
                     'data': dict(fsm_handler.rooms[command['args'][1]])}
             del data['data']['password']
             await gateway.clients[id]["websocket"].send(respond('error', ['Command caused an exception', data]))
 
     except Exception as e:
-        traceback.print_stack()
-        print('-' * 10)
-        exc = sys.exception()
-        print(repr(traceback.format_exception(exc)))
+        logger.error('Handle command', traceback.format_exc())
         await gateway.clients[id]["websocket"].send(respond('error', ['Command has wrong format', str(e)]))
 
 

@@ -1,8 +1,11 @@
+import os
+
 from flask import Blueprint, request
 from api import response_generator as r, auth
 from broker import gateway
 from logic import fsm_handler
 from logic.fsm_handler import order_flightstrips
+from logs import logger
 from util import uid
 
 management = Blueprint('management', __name__, url_prefix='/api/v1')
@@ -15,6 +18,7 @@ def create_room():
     gateway.rooms[room_id] = []
     fsm_handler.rooms[room_id] = {"password": auth.encrypt(password)}
     fsm_handler.order_flightstrips[room_id] = {}
+    logger.debug(f"Room {room_id} created")
     return r.respond({"id": room_id})
 
 
@@ -25,12 +29,14 @@ def create_room_id(room_id):
     gateway.rooms[room_id] = []
     fsm_handler.rooms[room_id] = {"password": auth.encrypt(password)}
     fsm_handler.order_flightstrips[room_id] = {}
+    logger.debug(f"Room {room_id} created")
     return r.respond({"id": room_id})
 
 
 @management.route('/room/<room_id>', methods=["GET"])
 def get_room_id(room_id):
     exists = room_id in fsm_handler.rooms
+    logger.trace(f"Room {room_id} existence checked")
     return r.respond({"exists": exists})
 
 
@@ -41,6 +47,27 @@ def get_data():
         data = {'order': order_flightstrips[i], 'data': fsm_handler.rooms[i]}
         del data['data']['password']
         res.append(data)
-
+    logger.trace(f"Data fetch", {"data": res, "order_flightstrips": fsm_handler.order_flightstrips, "gatewayRooms": gateway.rooms})
     return r.respond(
         {"data": res, "order_flightstrips": fsm_handler.order_flightstrips, "gatewayRooms": gateway.rooms})
+
+
+@management.route('/loglevel/<level>', methods=["POST"])
+def set_log_level(level):
+    if os.environ.get('API_TOKEN') == request.headers['Authorization']:
+        match level:
+            case 'trace':
+                logger.LOG_LEVEL = 0
+            case 'debug':
+                logger.LOG_LEVEL = 1
+            case 'info':
+                logger.LOG_LEVEL = 2
+            case 'warning':
+                logger.LOG_LEVEL = 3
+            case 'error':
+                logger.LOG_LEVEL = 4
+            case 'critical':
+                logger.LOG_LEVEL = 5
+        return r.respond({"logLevel": logger.LOG_LEVEL})
+    return r.respond({"success": False}, 401)
+

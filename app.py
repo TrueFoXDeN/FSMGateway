@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 from flask import Flask
 from flask_cors import CORS
-import logging
+# import logging
 import asyncio
 import websockets
 
@@ -13,12 +13,8 @@ from broker import gateway
 from broker.gateway import handle_client
 from broker.response_generator import respond
 from logic import fsm_handler
+from logs import logger
 from routes.management import management
-
-logger = logging.getLogger('websockets')
-logger.propagate = False
-logger.setLevel(logging.INFO)
-logger.addHandler(logging.StreamHandler())
 
 app = Flask(__name__)
 app.register_blueprint(management)
@@ -26,19 +22,21 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 async def start_api():
+    logger.info("Starting API")
     serve(app, port=5002, host='0.0.0.0', url_scheme='https')
     while True:
         await asyncio.sleep(10)
 
 
 async def start_websocket():
+    logger.info("Starting Websocket")
     async with websockets.serve(handle_client, "", 4000):
         await asyncio.Future()
 
 
 async def start_pruning():
+    logger.info("Starting Room Pruning")
     while True:
-        print('room pruning...')
         rooms_to_delete = []
 
         for room in fsm_handler.rooms:
@@ -54,7 +52,7 @@ async def start_pruning():
                             respond('room_closed', ['Room closed due to inactivity']))
                         await gateway.clients[id]['websocket'].close()
                     del gateway.rooms[room]
-                    print(f'room {room} pruned')
+                    logger.info(f'Room {room} pruned')
         for room in rooms_to_delete:
             del fsm_handler.rooms[room]
             del fsm_handler.order_flightstrips[room]
@@ -73,4 +71,5 @@ def main():
 
 
 if __name__ == '__main__':
+    logger.info("Gateway started")
     main()

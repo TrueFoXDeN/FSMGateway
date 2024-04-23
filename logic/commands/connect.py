@@ -9,9 +9,13 @@ from logic.command_verifyer import verify_command
 from logic.fsm_handler import order_flightstrips, rooms
 from datetime import datetime
 
+from logs import logger
+
+
 async def execute(command, id):
     """args["roomid", "password", "name"]"""
     if not verify_command(json.dumps(command), "connect"):
+        logger.trace('[Connect] Command verification Failed', command)
         return False
     else:
         room_id = command["args"][0]
@@ -19,11 +23,15 @@ async def execute(command, id):
         name = command["args"][2]
 
         if room_id not in gateway.rooms:
+            logger.trace('[Connect] Room not found', room_id)
             return False
 
         if auth.check_password(password, fsm_handler.rooms[room_id]["password"]):
             token = auth.encode_token({'room': room_id})
+            logger.trace('[Connect] Token encoded', token)
         else:
+            logger.trace('[Connect] Invalid password',
+                         {"password": password, "roomPassword": fsm_handler.rooms[room_id]["password"]})
             return False
 
         if id not in gateway.rooms[room_id]:
@@ -38,6 +46,8 @@ async def execute(command, id):
 
         client_ids = gateway.rooms[room_id]
         client_names = [gateway.clients[i]["name"] for i in client_ids]
+
+        logger.trace('[Connect] Connected Client names', client_names)
 
         await message_handler.send(id, respond('token', [token, data]))
         await message_handler.send(id, respond('get_clients', client_names))

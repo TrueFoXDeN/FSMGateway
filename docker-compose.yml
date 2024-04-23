@@ -11,6 +11,8 @@ services:
         - hs-services
       environment:
         - JWT_PASSWORD=Z6LXQoOMSVkAyf0TLkOMSn9jigB8VD7m
+        - LOKI_URL=http://loki:3100/loki/api/v1/push
+        - API_TOKEN=Ax9Zxcx0XMmhMrhe0dQMjlk6HRt9kU0b
 
 networks:
     hs-services:
