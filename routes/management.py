@@ -40,13 +40,26 @@ def get_room_id(room_id):
     return r.respond({"exists": exists})
 
 
+@management.route('/statistics', methods=["GET"])
+def get_statistics():
+    rooms = len(fsm_handler.rooms)
+    flightstrips = 0
+    user = len(gateway.clients)
+
+    for i in fsm_handler.rooms:
+        for j in order_flightstrips[i]:
+            for _ in fsm_handler.order_flightstrips[i][j]:
+                flightstrips += 1
+    return r.respond({'rooms': rooms, 'flightstrips': flightstrips, 'user': user})
+
 @management.route('/data', methods=["GET"])
 def get_data():
+    # Räume, Flightstrip, User
     res = []
     for i in fsm_handler.rooms:
         data = {'order': order_flightstrips[i], 'data': fsm_handler.rooms[i]}
         del data['data']['password']
-        res.append(data)
+        res.append({i: data})
     logger.trace(f"Data fetch", {"data": res, "order_flightstrips": fsm_handler.order_flightstrips, "gatewayRooms": gateway.rooms})
     return r.respond(
         {"data": res, "order_flightstrips": fsm_handler.order_flightstrips, "gatewayRooms": gateway.rooms})
