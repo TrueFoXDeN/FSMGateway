@@ -52,17 +52,18 @@ def get_statistics():
                 flightstrips += 1
     return r.respond({'rooms': rooms, 'flightstrips': flightstrips, 'user': user})
 
+
 @management.route('/data', methods=["GET"])
 def get_data():
-    # Räume, Flightstrip, User
-    res = []
+    data = {}
     for i in fsm_handler.rooms:
-        data = {'order': order_flightstrips[i], 'data': fsm_handler.rooms[i]}
-        del data['data']['password']
-        res.append({i: data})
-    logger.trace(f"Data fetch", {"data": res, "order_flightstrips": fsm_handler.order_flightstrips, "gatewayRooms": gateway.rooms})
-    return r.respond(
-        {"data": res, "order_flightstrips": fsm_handler.order_flightstrips, "gatewayRooms": gateway.rooms})
+        data[i] = fsm_handler.rooms[i]
+
+    clients_copy = gateway.clients
+    for i in gateway.clients:
+        del clients_copy[i]['websocket']
+
+    return r.respond({'data': data, 'order': fsm_handler.order_flightstrips, 'clients': clients_copy})
 
 
 @management.route('/loglevel/<level>', methods=["POST"])
@@ -83,4 +84,3 @@ def set_log_level(level):
                 logger.LOG_LEVEL = 5
         return r.respond({"logLevel": logger.LOG_LEVEL})
     return r.respond({"success": False}, 401)
-

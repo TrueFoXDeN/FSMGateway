@@ -23,6 +23,7 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 async def start_api():
     logger.info("Starting API")
+    print("Starting API")
     serve(app, port=5002, host='0.0.0.0', url_scheme='https')
     while True:
         await asyncio.sleep(10)
@@ -30,12 +31,14 @@ async def start_api():
 
 async def start_websocket():
     logger.info("Starting Websocket")
+    print("Starting Websocket")
     async with websockets.serve(handle_client, "", 4000):
         await asyncio.Future()
 
 
 async def start_pruning():
     logger.info("Starting Room Pruning")
+    print("Starting Room Pruning")
     while True:
         rooms_to_delete = []
 
