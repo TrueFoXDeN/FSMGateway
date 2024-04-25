@@ -60,8 +60,9 @@ def get_data():
         data[i] = fsm_handler.rooms[i]
 
     clients_copy = gateway.clients
-    for i in gateway.clients:
-        del clients_copy[i]['websocket']
+    if len(gateway.clients) > 0:
+        for i in gateway.clients:
+            del clients_copy[i]['websocket']
 
     return r.respond({'data': data, 'order': fsm_handler.order_flightstrips, 'clients': clients_copy})
 
